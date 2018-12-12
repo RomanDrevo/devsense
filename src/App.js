@@ -5,6 +5,7 @@ import {inject, observer} from "mobx-react";
 import {Route, Switch, withRouter} from "react-router-dom";
 import {Col, Grid, Row} from "react-bootstrap";
 import FoldersComponent from "./components/folders/FoldersComponent";
+import loader from './assets/images/loading.svg'
 
 @withRouter
 @inject('testStore', 'dataStore')
@@ -14,7 +15,7 @@ class App extends Component {
     componentDidMount() {
         const {dataStore} = this.props
 
-        console.log('dataStore: ', dataStore)
+        // console.log('dataStore: ', dataStore)
 
         dataStore.getData()
     }
@@ -23,12 +24,20 @@ class App extends Component {
         const {dataStore} = this.props
 
         if (dataStore.isLoading)
-            return <div>Loading...</div>
+            return <div><img src={loader} className="loader" alt="loading-spinner"/></div>
 
 
         return (
             <div className="App">
                 <Grid className="">
+                    {/*<form>*/}
+                        {/*<label htmlFor="radius">Radius:</label>*/}
+                        {/*<input type="text" id="radius" name="radius" value={200} />*/}
+
+                        {/*<label htmlFor="numNodes">Number of elements:</label>*/}
+                        {/*<input type="text" id="numNodes" name="radius" value={100} />*/}
+                    {/*</form>*/}
+
                     <Row>
                         <Col sm={12}>
                             <Switch>

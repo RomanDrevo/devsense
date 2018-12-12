@@ -30,3 +30,12 @@
     transform: rotate(360deg);
   }
 }
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 130px;
+    height: 130px;
+    margin: -75px 0 0 -75px;
+}

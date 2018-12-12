@@ -5,6 +5,7 @@ import Data from "../models/Data";
 export default class DataStore{
     @observable isLoading = false
     @observable data = []
+    @observable isChildrenShow = false
 
     @action
     async getData(){
@@ -23,11 +24,17 @@ export default class DataStore{
             runInAction(()=> this.data = Data.reconstituteFrom(data.data.data))
         }
         catch (e) {
-            console.log({e})
+            console.log(e.response.statusText)
         }
         finally {
             this.isLoading = false
+            console.log('this.data: ', this.data)
         }
+    }
+
+    @action
+    showChildren = () =>{
+        this.isChildrenShow = true
     }
 
 }
