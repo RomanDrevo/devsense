@@ -17,14 +17,14 @@ class App extends Component {
 
         // console.log('dataStore: ', dataStore)
 
-        dataStore.getData()
+        // dataStore.openNode()
     }
 
     render() {
         const {dataStore} = this.props
 
-        if (dataStore.isLoading)
-            return <div><img src={loader} className="loader" alt="loading-spinner"/></div>
+        // if (dataStore.isLoading)
+        //     return <div><img src={loader} className="loader" alt="loading-spinner"/></div>
 
 
         return (

@@ -1,5 +1,5 @@
 .root-folder{
-    position: relative;
+    /*position: relative;*/
     width: 50px;
     height: 50px;
     background: gray;
@@ -9,14 +9,7 @@
     cursor: pointer;
 }
 
-/*.root-folder:before {*/
-    /*position: absolute;*/
-    /*height: 90px;*/
-    /*width: 180px;*/
-    /*border-radius: 90px 0 0 0 ;*/
-    /*background: green;*/
-    /*content: "";*/
-/*}*/
+
 
 .child-folder{
     width: 25px;
@@ -25,11 +18,6 @@
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;
-    display: block;
-    position: absolute;
-    overflow: hidden;
-    top: 50%;
-    left: 50%;
-    margin: -15px;
+    cursor: pointer;
 }
 
