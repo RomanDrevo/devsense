@@ -15,14 +15,17 @@ class Node extends Component {
     }
 
     handleOnClick = () => {
-
+        console.log('CLICKED!!!!!')
         const {dataStore, node} = this.props
+
+        // console.log('777777 Props: ', dataStore.currentPath + '/' + node.label)
 
         dataStore.setCurrentPath(dataStore.currentPath + '/' + node.label)
 
         dataStore.setSelectedNode(node)
 
-        console.log('node Props: ', this.props)
+        // console.log('6666666node Props: ', this.props)
+
 
         let config = {
             headers: {
@@ -32,25 +35,31 @@ class Node extends Component {
 
         console.log('API link: ', dataStore.url + '?path=' + dataStore.currentPath)
 
+
+        dataStore.expandNode()
+
         axios(dataStore.url + '?path=' + dataStore.currentPath, config).then(response => {
-            console.log('---res: ', response.data.data.children)
+            // console.log('---res: ', response.data.data.children)
             this.setState({children: response.data.data.children});
+            // dataStore.setChildren(response.data.data.children)
+            // console.log('---dataStore CHILDREN: ', dataStore.children)
+            // console.log('---STATE CHILDREN: ', this.state.children)
         });
     }
 
     render() {
 
-        console.log('Node Props: ', this.props)
+        // console.log('Node Props: ', this.props)
 
         const {dataStore, node} = this.props
         const nodes = this.state.children.map(child => {
-            let path = this.props.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
-            return <Node {...child} path={path} node={child} dataStore={dataStore} /> // и создаём <Node> для каждого
+            // let path = this.props.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
+            return <div key={child.label}><Node {...child}  node={child} dataStore={dataStore} /></div> // и создаём <Node> для каждого
         });
         return (
             <ul>
-                <li onClick={this.handleOnClick}>
-                    {node.label}{nodes}
+                <li>
+                    <h3 onClick={this.handleOnClick}>{node.label}</h3>{nodes}
                 </li>
             </ul>
         );
@@ -65,7 +74,7 @@ class FoldersComponent extends Component {
     render() {
         const {dataStore} = this.props
         const {data} = dataStore
-        console.log('-+ data: ', data)
+        // console.log('-+ data: ', data)
 
         // if (dataStore.isLoading || !dataStore.data.children)
         //     return <div><img src={loader} className="loader" alt="loading-spinner"/></div>

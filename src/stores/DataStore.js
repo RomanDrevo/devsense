@@ -12,20 +12,34 @@ export default class DataStore {
     @observable selectedNode = null
     @observable previousPath = ''
     @observable currentPath = ''
+    @observable children = []
+    _config = {
+        headers: {
+            'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
+        }
+    }
 
     initRootNode = () => {
-        let config = {
-            headers: {
-                'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
-            }
-        }
 
-        axios.get(`${this.url}?path=root/`, config)
+
+        axios.get(`${this.url}?path=root/`, this._config)
             .then(res => {
                 this.data = Data.reconstituteFrom(res.data.data)
                 this.currentPath = this.data.label
             })
 
+    }
+
+    @action
+    expandNode = () => {
+        axios(this.url + '?path=' + this.currentPath, this._config)
+            .then(res => this.children = res.data.data.children)
+            .then(()=> console.log('-+-children: ', this.children))
+    }
+
+    @action
+    setChildren = children =>{
+        this.children = children
     }
 
     @action
