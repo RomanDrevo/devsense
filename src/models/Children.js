@@ -4,7 +4,7 @@ export default class Children {
     }
 
     static reconstituteFrom(json) {
-
+        console.log(json)
         const state = {
             children: json['children'],
         };

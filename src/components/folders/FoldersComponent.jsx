@@ -19,8 +19,6 @@ class Node extends Component {
         const {dataStore, node, path} = this.props
         console.log('CLICKED!!! Path is: ', path)
 
-        // console.log('777777 Props: ', dataStore.currentPath + '/' + node.label)
-
         dataStore.setCurrentPath(dataStore.currentPath + '/' + node.label)
         this.setState({path: dataStore.currentPath})
 
@@ -35,35 +33,29 @@ class Node extends Component {
             }
         }
 
-        console.log('API link: ', `${dataStore.url}?path=${path|| dataStore.currentPath}`)
+        console.log('API link: ', `${dataStore.url}?path=${path || dataStore.currentPath}`)
 
-        dataStore.expandNode(`${dataStore.url}?path=${path|| dataStore.currentPath}`)
+        // dataStore.expandNode(`${dataStore.url}?path=${path|| dataStore.currentPath}`)
 
-
-        try{
-            axios(`${dataStore.url}?path=${path|| dataStore.currentPath}`, config).then(response => {
+        try {
+            axios(`${dataStore.url}?path=${path || dataStore.currentPath}`, config).then(response => {
                 console.log('---res: ', response.data.data.children)
                 this.setState({children: response.data.data.children});
                 // dataStore.setChildren(response.data.data.children)
-                // console.log('---dataStore CHILDREN: ', dataStore.children)
-                // console.log('---STATE CHILDREN: ', this.state.children)
             });
         }
         catch (e) {
             console.log('Opa! ', e)
         }
-
-
-
     }
 
     render() {
 
         // console.log('Node Props: ', this.props)
 
-        const {dataStore, node, path} = this.props
-        const {children} = dataStore
-        console.log('Oh children: ', children.children)
+        const {dataStore, node} = this.props
+        const {children: {children}} = dataStore
+        // console.log('---1children: ', children)
 
         // const nodes = this.state.children.map(child => {
         //     let path = this.state.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
@@ -77,10 +69,19 @@ class Node extends Component {
                     {/*{nodes}*/}
 
                     {
-                        this.state.children.map(child =>
+                        this.state.children && this.state.children.map(child =>
                         // let path = this.state.path + '/' + child.label;
-                        <div key={child.label}><Node path={this.state.path + '/' + child.label} {...child}  node={child} dataStore={dataStore} /></div>)
+                        <div key={child.label}>
+                            <Node
+                                path={this.state.path + '/' + child.label}
+                                node={child}
+                                dataStore={dataStore}
+                            />
+                        </div>)
                     }
+
+
+
                 </li>
             </ul>
         );
@@ -90,42 +91,49 @@ class Node extends Component {
 
 @inject('dataStore')
 @observer
+class RootNode extends Component{
+    render(){
+        const {dataStore} = this.props
+        return (
+            <div className="root-folder" onClick={dataStore.initRootNode}/>
+        )
+    }
+}
+
+
+
+@inject('dataStore')
+@observer
 class FoldersComponent extends Component {
 
     render() {
         const {dataStore} = this.props
         const {data} = dataStore
-        // console.log('-+ data: ', data)
+        const {children: {children}} = dataStore
+        console.log('-+ children: ', children)
 
         // if (dataStore.isLoading || !dataStore.data.children)
         //     return <div><img src={loader} className="loader" alt="loading-spinner"/></div>
 
         return (
             <div>
-                {/*Folders*/}
-                <div className="root-folder" onClick={dataStore.initRootNode}/>
-
-                {/*{*/}
-                {/*dataStore.isChildrenShow &&*/}
-                {/*<ul>*/}
-                {/*{*/}
-                {/*data.children.map((x, index) => <li key={index}><div*/}
-                {/*// onClick={()=> dataStore.openNode(x)}*/}
-                {/*className="child-folder" />{x.label}</li>)*/}
-                {/*}*/}
-                {/*</ul>*/}
-                {/*}*/}
+                <RootNode/>
 
                 {
-                    dataStore.data && dataStore.data.children && dataStore.data.children.length &&
+                    children && children.length &&
                     <ul>
                         {
-                            data.children.map((x, index) => <Node key={index} node={x}/>)
+                            children.map((x) => (
+                                <div key={x.label}>
+                                    <Node
+                                        node={x}
+                                        dataStore={dataStore}
+                                    />
+                                </div>
+                            ) )
                         }
                     </ul>
                 }
-
-
 
                 <div id="canvas"/>
 

@@ -21,15 +21,13 @@ export default class DataStore {
     }
 
     initRootNode = () => {
-
-
         axios.get(`${this.url}?path=root/`, this._config)
             .then(res => {
                 this.data = Data.reconstituteFrom(res.data.data)
-                this.children = this.data.children
+                this.children = Children.reconstituteFrom(res.data.data)
+                // console.log('this..children-- ', this.children)
                 this.currentPath = this.data.label
             })
-
     }
 
     @action
