@@ -10,21 +10,23 @@ class Node extends Component {
     constructor() {
         super()
         this.state = {
-            children: []
+            children: [],
+            path: ''
         };
     }
 
     handleOnClick = () => {
-        console.log('CLICKED!!!!!')
-        const {dataStore, node} = this.props
+        const {dataStore, node, path} = this.props
+        console.log('CLICKED!!! Path is: ', path)
 
         // console.log('777777 Props: ', dataStore.currentPath + '/' + node.label)
 
         dataStore.setCurrentPath(dataStore.currentPath + '/' + node.label)
+        this.setState({path: dataStore.currentPath})
 
         dataStore.setSelectedNode(node)
 
-        // console.log('6666666node Props: ', this.props)
+        console.log('node Props: ', this.props)
 
 
         let config = {
@@ -33,13 +35,13 @@ class Node extends Component {
             }
         }
 
-        console.log('API link: ', dataStore.url + '?path=' + dataStore.currentPath)
+        console.log('API link: ', `${dataStore.url}?path=${path|| dataStore.currentPath}`)
 
 
         dataStore.expandNode()
 
-        axios(dataStore.url + '?path=' + dataStore.currentPath, config).then(response => {
-            // console.log('---res: ', response.data.data.children)
+        axios(`${dataStore.url}?path=${path|| dataStore.currentPath}`, config).then(response => {
+            console.log('---res: ', response.data.data.children)
             this.setState({children: response.data.data.children});
             // dataStore.setChildren(response.data.data.children)
             // console.log('---dataStore CHILDREN: ', dataStore.children)
@@ -51,15 +53,16 @@ class Node extends Component {
 
         // console.log('Node Props: ', this.props)
 
-        const {dataStore, node} = this.props
+        const {dataStore, node, path} = this.props
         const nodes = this.state.children.map(child => {
-            // let path = this.props.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
-            return <div key={child.label}><Node {...child}  node={child} dataStore={dataStore} /></div> // и создаём <Node> для каждого
+            let path = this.state.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
+            console.log('My PATH: ', path)
+            return <div key={child.label}><Node path={path} {...child}  node={child} dataStore={dataStore} /></div> // и создаём <Node> для каждого
         });
         return (
             <ul>
                 <li>
-                    <h3 onClick={this.handleOnClick}>{node.label}</h3>{nodes}
+                    <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>{nodes}
                 </li>
             </ul>
         );
