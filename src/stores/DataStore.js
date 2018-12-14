@@ -1,6 +1,7 @@
 import {observable, action, runInAction} from "mobx";
 import axios from 'axios'
 import Data from "../models/Data";
+import Children from "../models/Children";
 
 export default class DataStore {
     @observable isLoading = false
@@ -25,16 +26,32 @@ export default class DataStore {
         axios.get(`${this.url}?path=root/`, this._config)
             .then(res => {
                 this.data = Data.reconstituteFrom(res.data.data)
+                this.children = this.data.children
                 this.currentPath = this.data.label
             })
 
     }
 
     @action
-    expandNode = () => {
-        axios(this.url + '?path=' + this.currentPath, this._config)
-            .then(res => this.children = res.data.data.children)
-            .then(()=> console.log('-+-children: ', this.children))
+    async expandNode (link) {
+        try{
+            const response = await axios(link, this._config)
+            // console.log('--+++----response', response)
+            // const children = Children.reconstituteFrom(response.data.data)
+            // console.log('--+++-----------------', children)
+            runInAction(() => this.children = Children.reconstituteFrom(response.data.data))
+        }
+        catch (e) {
+            console.log('Opa-opana! ', e)
+        }
+        finally {
+            console.log('New children! ', this.children)
+        }
+
+
+        // axios(link, this._config)
+        //     .then(res => this.children = res.data.data.children)
+            // .then(()=> console.log('-+-children: ', this.children))
     }
 
     @action

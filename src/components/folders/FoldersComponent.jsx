@@ -37,16 +37,24 @@ class Node extends Component {
 
         console.log('API link: ', `${dataStore.url}?path=${path|| dataStore.currentPath}`)
 
+        dataStore.expandNode(`${dataStore.url}?path=${path|| dataStore.currentPath}`)
 
-        dataStore.expandNode()
 
-        axios(`${dataStore.url}?path=${path|| dataStore.currentPath}`, config).then(response => {
-            console.log('---res: ', response.data.data.children)
-            this.setState({children: response.data.data.children});
-            // dataStore.setChildren(response.data.data.children)
-            // console.log('---dataStore CHILDREN: ', dataStore.children)
-            // console.log('---STATE CHILDREN: ', this.state.children)
-        });
+        try{
+            axios(`${dataStore.url}?path=${path|| dataStore.currentPath}`, config).then(response => {
+                console.log('---res: ', response.data.data.children)
+                this.setState({children: response.data.data.children});
+                // dataStore.setChildren(response.data.data.children)
+                // console.log('---dataStore CHILDREN: ', dataStore.children)
+                // console.log('---STATE CHILDREN: ', this.state.children)
+            });
+        }
+        catch (e) {
+            console.log('Opa! ', e)
+        }
+
+
+
     }
 
     render() {
@@ -54,15 +62,25 @@ class Node extends Component {
         // console.log('Node Props: ', this.props)
 
         const {dataStore, node, path} = this.props
-        const nodes = this.state.children.map(child => {
-            let path = this.state.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
-            console.log('My PATH: ', path)
-            return <div key={child.label}><Node path={path} {...child}  node={child} dataStore={dataStore} /></div> // и создаём <Node> для каждого
-        });
+        const {children} = dataStore
+        console.log('Oh children: ', children.children)
+
+        // const nodes = this.state.children.map(child => {
+        //     let path = this.state.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
+        //     console.log('My PATH: ', path)
+        //     return <div key={child.label}><Node path={path} {...child}  node={child} dataStore={dataStore} /></div> // и создаём <Node> для каждого
+        // });
         return (
             <ul>
                 <li>
-                    <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>{nodes}
+                    <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>
+                    {/*{nodes}*/}
+
+                    {
+                        this.state.children.map(child =>
+                        // let path = this.state.path + '/' + child.label;
+                        <div key={child.label}><Node path={this.state.path + '/' + child.label} {...child}  node={child} dataStore={dataStore} /></div>)
+                    }
                 </li>
             </ul>
         );
@@ -106,6 +124,8 @@ class FoldersComponent extends Component {
                         }
                     </ul>
                 }
+
+
 
                 <div id="canvas"/>
 
