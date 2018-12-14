@@ -7,7 +7,42 @@ export default class DataStore {
     @observable data = []
     @observable isChildrenShow = false
 
-    _url = 'http://dvns.me/yaniv/clientest/public/explorePictures'
+    @observable url = 'http://dvns.me/yaniv/clientest/public/explorePictures'
+
+    @observable selectedNode = null
+    @observable previousPath = ''
+    @observable currentPath = ''
+
+    initRootNode = () => {
+        let config = {
+            headers: {
+                'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
+            }
+        }
+
+        axios.get(`${this.url}?path=root/`, config)
+            .then(res => {
+                this.data = Data.reconstituteFrom(res.data.data)
+                this.currentPath = this.data.label
+            })
+
+    }
+
+    @action
+    setSelectedNode = node =>{
+        this.selectedNode = node
+    }
+
+    @action
+    setCurrentPath = (path) =>{
+        this.currentPath = path
+        console.log('new currPath: ', this.currentPath )
+    }
+
+    @action
+    setPreviousPath = (path) =>{
+        this.previousPath = path
+    }
 
     // @action
     // async getData() {
@@ -80,17 +115,7 @@ export default class DataStore {
     //     // }
     // }
 
-    openNode = (path) =>{
-        let config = {
-            headers: {
-                'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
-            }
-        }
 
-        axios.get(`${this._url}?path=root/`, config)
-            .then(res => this.data = Data.reconstituteFrom(res.data.data))
-
-    }
 
 
     // @action
