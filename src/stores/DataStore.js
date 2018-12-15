@@ -37,7 +37,6 @@ export default class DataStore {
 
     @action
     initRootNode = () => {
-        console.log('initing..............')
         axios.get(`${this.url}?path=root/`, this._config)
             .then(res => {
                 this.data = Data.reconstituteFrom(res.data.data)
@@ -48,30 +47,6 @@ export default class DataStore {
             })
     }
 
-    // @action
-    // async initRootNode () {
-    //     console.log('initing..............')
-    //     try{
-    //         const res = await axios.get(`${this.url}?path=root/`, this._config)
-    //
-    //         runInAction(() => this.data = Data.reconstituteFrom(res.data.data))
-    //         runInAction(() => this.currentPath = this.data.label)
-    //         runInAction(() => this.children = Children.reconstituteFrom(res.data.data))
-    //
-    //             // .then(res => {
-    //             //     this.data = Data.reconstituteFrom(res.data.data)
-    //             //     this.children = Children.reconstituteFrom(res.data.data)
-    //             //     // console.log('this..children-- ', this.children)
-    //             //     this.currentPath = this.data.label
-    //             //     console.log('currPath: ', this.currentPath)
-    //             // })
-    //     }
-    //     catch (e) {
-    //         console.log('Opa-opana! ', e.message)
-    //         runInAction(() => this.loadChildrenError = e.message);
-    //     }
-    //
-    // }
 
     @action
     async expandNode(link) {

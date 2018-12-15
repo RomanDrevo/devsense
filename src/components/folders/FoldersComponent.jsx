@@ -4,8 +4,10 @@ import {inject, observer} from "mobx-react/index";
 import loader from '../../assets/images/loading.svg'
 import axios from 'axios'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import {withRouter} from "react-router-dom";
 
 
+@withRouter
 @inject('dataStore')
 @observer
 class Node extends Component {
@@ -57,9 +59,16 @@ class Node extends Component {
 
     }
 
-    handleOnClick = () => {
+    handleOnFolderClick = () => {
+
         this.setState({isChildrenShow: true})
-        // this.props.dataStore.showChildren()
+
+    }
+
+    handleOnPictureClick = () => {
+        const {history} = this.props
+        console.log('history: ', this.props)
+        // history.push('/picture')
     }
 
     render() {
@@ -76,9 +85,9 @@ class Node extends Component {
         // });
         return (
             <ul>
-                <li onClick={this.handleOnClick}
+                <li onClick={node.type === 0 ? this.handleOnFolderClick : this.handleOnPictureClick}
                     className={this.props.node.type === 0 ? 'folder-node' : 'picture-node'}>
-                    {/*<h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>*/}
+                    <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>
                     {/*{nodes}*/}
 
                     {
@@ -128,7 +137,7 @@ class RootNode extends Component {
     }
 }
 
-
+@withRouter
 @inject('dataStore')
 @observer
 class FoldersComponent extends Component {
@@ -142,7 +151,7 @@ class FoldersComponent extends Component {
     }
 
     render() {
-        const {dataStore} = this.props
+        const {dataStore, history} = this.props
         const {data} = dataStore
         const {children: {children}} = dataStore
         // console.log('-+ children: ', children)
@@ -186,6 +195,7 @@ class FoldersComponent extends Component {
                                         node={x}
                                         dataStore={dataStore}
                                         myPath={'root/' + x.label}
+                                        history={history}
                                     />
                                 </div>
                             ))
