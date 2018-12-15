@@ -11,9 +11,8 @@ class Node extends Component {
         super()
         this.state = {
             myChildren: [],
-            children: [],
             myPath: 'root',
-            showChildren: false
+            isChildrenShow: false
         };
     }
 
@@ -21,7 +20,6 @@ class Node extends Component {
         const {node, dataStore} = this.props
         console.log('-mounted, I am: ', node.label)
         // console.log('dataStore: ', dataStore.currentPath)
-        // console.log('API URL: ', dataStore.currentPath + '/' + node.label)
         this.setState({myPath: this.state.myPath + '/' + node.label})
 
         let config = {
@@ -35,54 +33,11 @@ class Node extends Component {
                 .then((res) => this.setState({myChildren: res.data.data.children}))
         }
 
-
-
-        // try {
-        //     axios(`${dataStore.url}?path=${dataStore.currentPath + '/' + node.label}`, config).then(response => {
-        //         console.log('---res: ', response.data.data.children)
-        //         this.setState({children: response.data.data.children});
-        //         // dataStore.setChildren(response.data.data.children)
-        //     });
-        // }
-        // catch (e) {
-        //     console.log('Opa! ', e)
-        // }
-
     }
 
     handleOnClick = () => {
-        this.setState({showChildren: true})
-        // const {dataStore, node, path} = this.props
-        // console.log('CLICKED!!! Path is: ', path)
-        //
-        // dataStore.setCurrentPath(dataStore.currentPath + '/' + node.label)
-        // // this.setState({path: dataStore.currentPath})
-        //
-        // dataStore.setSelectedNode(node)
-        //
-        // // console.log('node Props: ', this.props)
-        //
-        //
-        // let config = {
-        //     headers: {
-        //         'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
-        //     }
-        // }
-
-        // console.log('API link: ', `${dataStore.url}?path=${path || dataStore.currentPath}`)
-
-        // dataStore.expandNode(`${dataStore.url}?path=${path|| dataStore.currentPath}`)
-
-        // try {
-        //     axios(`${dataStore.url}?path=${this.state.myPath}`, config).then(response => {
-        //         console.log('---res: ', response.data.data.children)
-        //         this.setState({children: response.data.data.children});
-        //         // dataStore.setChildren(response.data.data.children)
-        //     });
-        // }
-        // catch (e) {
-        //     console.log('Opa! ', e)
-        // }
+        this.setState({isChildrenShow: true})
+        // this.props.dataStore.showChildren()
     }
 
     render() {
@@ -91,7 +46,6 @@ class Node extends Component {
 
         const {dataStore, node} = this.props
         const {children: {children}} = dataStore
-        // console.log('---1children: ', children)
 
         // const nodes = this.state.children.map(child => {
         //     let path = this.state.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
@@ -105,7 +59,7 @@ class Node extends Component {
                     {/*{nodes}*/}
 
                     {
-                        this.state.showChildren ?
+                        this.state.isChildrenShow ?
                             this.state.myChildren && this.state.myChildren.map(child =>(
                                 <div key={child.label}>
                                     <Node
@@ -145,10 +99,6 @@ class Node extends Component {
 @inject('dataStore')
 @observer
 class RootNode extends Component{
-    // componentDidMount(){
-    //     this.props.dataStore.initRootNode()
-    // }
-
     render(){
         const {dataStore} = this.props
         return (

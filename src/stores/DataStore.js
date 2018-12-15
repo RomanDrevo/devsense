@@ -16,6 +16,18 @@ export default class DataStore {
     @observable children = []
     @observable myChildren = []
 
+    @observable isChildrenShow = false
+
+    @action
+    showChildren = () => {
+        this.isChildrenShow = true
+    }
+
+    @action
+    hideChildren = () =>{
+        this.isChildrenShow = false
+    }
+
     _config = {
         headers: {
             'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
@@ -34,9 +46,9 @@ export default class DataStore {
     }
 
     @action
-    async expandNode (link) {
+    async expandNode(link) {
         // console.log('here, sending ajax to: ', link)
-        try{
+        try {
             const response = await axios(`${this.url}?path=${link}`, this._config)
             // console.log('--+link', link)
             // const children = Children.reconstituteFrom(response.data.data)
@@ -54,27 +66,27 @@ export default class DataStore {
 
         // axios(link, this._config)
         //     .then(res => this.children = res.data.data.children)
-            // .then(()=> console.log('-+-children: ', this.children))
+        // .then(()=> console.log('-+-children: ', this.children))
     }
 
     @action
-    setChildren = children =>{
+    setChildren = children => {
         this.children = children
     }
 
     @action
-    setSelectedNode = node =>{
+    setSelectedNode = node => {
         this.selectedNode = node
     }
 
     @action
-    setCurrentPath = (path) =>{
+    setCurrentPath = (path) => {
         this.currentPath = path
-        console.log('new currPath: ', this.currentPath )
+        console.log('new currPath: ', this.currentPath)
     }
 
     @action
-    setPreviousPath = (path) =>{
+    setPreviousPath = (path) => {
         this.previousPath = path
     }
 
@@ -148,8 +160,6 @@ export default class DataStore {
     //     //     console.log('this is picture')
     //     // }
     // }
-
-
 
 
     // @action
