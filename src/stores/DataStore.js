@@ -12,8 +12,10 @@ export default class DataStore {
 
     @observable selectedNode = null
     @observable previousPath = ''
-    @observable currentPath = ''
+    @observable currentPath = 'root'
     @observable children = []
+    @observable myChildren = []
+
     _config = {
         headers: {
             'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
@@ -27,23 +29,26 @@ export default class DataStore {
                 this.children = Children.reconstituteFrom(res.data.data)
                 // console.log('this..children-- ', this.children)
                 this.currentPath = this.data.label
+                console.log('currPath: ', this.currentPath)
             })
     }
 
     @action
     async expandNode (link) {
+        // console.log('here, sending ajax to: ', link)
         try{
-            const response = await axios(link, this._config)
-            // console.log('--+++----response', response)
+            const response = await axios(`${this.url}?path=${link}`, this._config)
+            // console.log('--+link', link)
             // const children = Children.reconstituteFrom(response.data.data)
-            // console.log('--+++-----------------', children)
-            runInAction(() => this.children = Children.reconstituteFrom(response.data.data))
+            // console.log('--+++-------', response)
+            return response
+            // runInAction(() => this.myChildren = Children.reconstituteFrom(response.data.data))
         }
         catch (e) {
             console.log('Opa-opana! ', e)
         }
         finally {
-            console.log('New children! ', this.children)
+            // console.log('New children! ', this.children)
         }
 
 

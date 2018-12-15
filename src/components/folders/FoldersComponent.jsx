@@ -10,22 +10,19 @@ class Node extends Component {
     constructor() {
         super()
         this.state = {
+            myChildren: [],
             children: [],
-            path: ''
+            myPath: 'root',
+            showChildren: false
         };
     }
 
-    handleOnClick = () => {
-        const {dataStore, node, path} = this.props
-        console.log('CLICKED!!! Path is: ', path)
-
-        dataStore.setCurrentPath(dataStore.currentPath + '/' + node.label)
-        this.setState({path: dataStore.currentPath})
-
-        dataStore.setSelectedNode(node)
-
-        console.log('node Props: ', this.props)
-
+    componentDidMount(){
+        const {node, dataStore} = this.props
+        console.log('-mounted, I am: ', node.label)
+        // console.log('dataStore: ', dataStore.currentPath)
+        // console.log('API URL: ', dataStore.currentPath + '/' + node.label)
+        this.setState({myPath: this.state.myPath + '/' + node.label})
 
         let config = {
             headers: {
@@ -33,20 +30,59 @@ class Node extends Component {
             }
         }
 
-        console.log('API link: ', `${dataStore.url}?path=${path || dataStore.currentPath}`)
+        if(node.type === 0){
+            dataStore.expandNode(this.props.myPath)
+                .then((res) => this.setState({myChildren: res.data.data.children}))
+        }
+
+
+
+        // try {
+        //     axios(`${dataStore.url}?path=${dataStore.currentPath + '/' + node.label}`, config).then(response => {
+        //         console.log('---res: ', response.data.data.children)
+        //         this.setState({children: response.data.data.children});
+        //         // dataStore.setChildren(response.data.data.children)
+        //     });
+        // }
+        // catch (e) {
+        //     console.log('Opa! ', e)
+        // }
+
+    }
+
+    handleOnClick = () => {
+        this.setState({showChildren: true})
+        // const {dataStore, node, path} = this.props
+        // console.log('CLICKED!!! Path is: ', path)
+        //
+        // dataStore.setCurrentPath(dataStore.currentPath + '/' + node.label)
+        // // this.setState({path: dataStore.currentPath})
+        //
+        // dataStore.setSelectedNode(node)
+        //
+        // // console.log('node Props: ', this.props)
+        //
+        //
+        // let config = {
+        //     headers: {
+        //         'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
+        //     }
+        // }
+
+        // console.log('API link: ', `${dataStore.url}?path=${path || dataStore.currentPath}`)
 
         // dataStore.expandNode(`${dataStore.url}?path=${path|| dataStore.currentPath}`)
 
-        try {
-            axios(`${dataStore.url}?path=${path || dataStore.currentPath}`, config).then(response => {
-                console.log('---res: ', response.data.data.children)
-                this.setState({children: response.data.data.children});
-                // dataStore.setChildren(response.data.data.children)
-            });
-        }
-        catch (e) {
-            console.log('Opa! ', e)
-        }
+        // try {
+        //     axios(`${dataStore.url}?path=${this.state.myPath}`, config).then(response => {
+        //         console.log('---res: ', response.data.data.children)
+        //         this.setState({children: response.data.data.children});
+        //         // dataStore.setChildren(response.data.data.children)
+        //     });
+        // }
+        // catch (e) {
+        //     console.log('Opa! ', e)
+        // }
     }
 
     render() {
@@ -69,16 +105,33 @@ class Node extends Component {
                     {/*{nodes}*/}
 
                     {
-                        this.state.children && this.state.children.map(child =>
-                        // let path = this.state.path + '/' + child.label;
-                        <div key={child.label}>
-                            <Node
-                                path={this.state.path + '/' + child.label}
-                                node={child}
-                                dataStore={dataStore}
-                            />
-                        </div>)
+                        this.state.showChildren ?
+                            this.state.myChildren && this.state.myChildren.map(child =>(
+                                <div key={child.label}>
+                                    <Node
+                                        myPath={this.props.myPath + '/' + child.label}
+                                        node={child}
+                                        dataStore={dataStore}
+                                    />
+                                </div>
+                            ))
+                            :
+                            null
                     }
+
+
+
+                    {/*{*/}
+                        {/*this.state.children && this.state.children.map(child =>*/}
+                        {/*// let path = this.state.path + '/' + child.label;*/}
+                        {/*<div key={child.label}>*/}
+                            {/*<Node*/}
+                                {/*path={this.state.path + '/' + child.label}*/}
+                                {/*node={child}*/}
+                                {/*dataStore={dataStore}*/}
+                            {/*/>*/}
+                        {/*</div>)*/}
+                    {/*}*/}
 
 
 
@@ -92,6 +145,10 @@ class Node extends Component {
 @inject('dataStore')
 @observer
 class RootNode extends Component{
+    // componentDidMount(){
+    //     this.props.dataStore.initRootNode()
+    // }
+
     render(){
         const {dataStore} = this.props
         return (
@@ -110,7 +167,7 @@ class FoldersComponent extends Component {
         const {dataStore} = this.props
         const {data} = dataStore
         const {children: {children}} = dataStore
-        console.log('-+ children: ', children)
+        // console.log('-+ children: ', children)
 
         // if (dataStore.isLoading || !dataStore.data.children)
         //     return <div><img src={loader} className="loader" alt="loading-spinner"/></div>
@@ -128,6 +185,7 @@ class FoldersComponent extends Component {
                                     <Node
                                         node={x}
                                         dataStore={dataStore}
+                                        myPath={'root/' + x.label}
                                     />
                                 </div>
                             ) )
