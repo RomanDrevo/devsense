@@ -3,6 +3,8 @@ import './folders.css'
 import {inject, observer} from "mobx-react/index";
 import loader from '../../assets/images/loading.svg'
 import axios from 'axios'
+import SweetAlert from 'react-bootstrap-sweetalert';
+
 
 @inject('dataStore')
 @observer
@@ -16,7 +18,7 @@ class Node extends Component {
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
         // var type = 0.25, //circle type - 1 whole, 0.5 half, 0.25 quarter
         //     radius = '200px', //distance from center
@@ -48,9 +50,9 @@ class Node extends Component {
             }
         }
 
-        if(node.type === 0){
+        if (node.type === 0) {
             dataStore.expandNode(this.props.myPath)
-                .then((res) => this.setState({myChildren: res.data.data.children}))
+                .then((res) => this.setState({myChildren: res ? res.data.data.children : []}))
         }
 
     }
@@ -74,13 +76,14 @@ class Node extends Component {
         // });
         return (
             <ul>
-                <li onClick={this.handleOnClick} className={this.props.node.type === 0 ? 'folder-node' : 'picture-node'}>
+                <li onClick={this.handleOnClick}
+                    className={this.props.node.type === 0 ? 'folder-node' : 'picture-node'}>
                     {/*<h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>*/}
                     {/*{nodes}*/}
 
                     {
                         this.state.isChildrenShow ?
-                            this.state.myChildren && this.state.myChildren.map(child =>(
+                            this.state.myChildren && this.state.myChildren.map(child => (
                                 <div key={child.label}>
                                     <Node
                                         myPath={this.props.myPath + '/' + child.label}
@@ -94,19 +97,17 @@ class Node extends Component {
                     }
 
 
-
                     {/*{*/}
-                        {/*this.state.children && this.state.children.map(child =>*/}
-                        {/*// let path = this.state.path + '/' + child.label;*/}
-                        {/*<div key={child.label}>*/}
-                            {/*<Node*/}
-                                {/*path={this.state.path + '/' + child.label}*/}
-                                {/*node={child}*/}
-                                {/*dataStore={dataStore}*/}
-                            {/*/>*/}
-                        {/*</div>)*/}
+                    {/*this.state.children && this.state.children.map(child =>*/}
+                    {/*// let path = this.state.path + '/' + child.label;*/}
+                    {/*<div key={child.label}>*/}
+                    {/*<Node*/}
+                    {/*path={this.state.path + '/' + child.label}*/}
+                    {/*node={child}*/}
+                    {/*dataStore={dataStore}*/}
+                    {/*/>*/}
+                    {/*</div>)*/}
                     {/*}*/}
-
 
 
                 </li>
@@ -118,8 +119,8 @@ class Node extends Component {
 
 @inject('dataStore')
 @observer
-class RootNode extends Component{
-    render(){
+class RootNode extends Component {
+    render() {
         const {dataStore} = this.props
         return (
             <div className="root-folder" onClick={dataStore.initRootNode}/>
@@ -128,13 +129,16 @@ class RootNode extends Component{
 }
 
 
-
 @inject('dataStore')
 @observer
 class FoldersComponent extends Component {
 
-    componentDidMount(){
+    componentDidMount() {
 
+    }
+
+    onConfirm = () => {
+        window.location.reload()
     }
 
     render() {
@@ -146,9 +150,31 @@ class FoldersComponent extends Component {
         // if (dataStore.isLoading || !dataStore.data.children)
         //     return <div><img src={loader} className="loader" alt="loading-spinner"/></div>
 
+
         return (
             <div>
                 <RootNode/>
+
+                {
+                    this.props.dataStore.loadChildrenError &&
+
+                    <SweetAlert
+                        warning
+                        // showCancel
+                        confirmBtnText="OK"
+                        confirmBtnBsStyle="danger"
+                        cancelBtnBsStyle="default"
+                        title="Server Error"
+                        onConfirm={this.onConfirm}
+                        // onCancel={this.closeAlert}
+                    >
+                        {
+                            this.props.dataStore.loadChildrenError
+                        }
+                        <h4>Click "OK" button to reload the app.</h4>
+                    </SweetAlert>
+                }
+
 
                 {
                     children && children.length &&
@@ -162,7 +188,7 @@ class FoldersComponent extends Component {
                                         myPath={'root/' + x.label}
                                     />
                                 </div>
-                            ) )
+                            ))
                         }
                     </ul>
                 }

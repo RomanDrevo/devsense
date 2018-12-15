@@ -15,6 +15,7 @@ export default class DataStore {
     @observable currentPath = 'root'
     @observable children = []
     @observable myChildren = []
+    @observable loadChildrenError = null
 
     @observable isChildrenShow = false
 
@@ -34,7 +35,9 @@ export default class DataStore {
         }
     }
 
+    @action
     initRootNode = () => {
+        console.log('initing..............')
         axios.get(`${this.url}?path=root/`, this._config)
             .then(res => {
                 this.data = Data.reconstituteFrom(res.data.data)
@@ -44,6 +47,31 @@ export default class DataStore {
                 console.log('currPath: ', this.currentPath)
             })
     }
+
+    // @action
+    // async initRootNode () {
+    //     console.log('initing..............')
+    //     try{
+    //         const res = await axios.get(`${this.url}?path=root/`, this._config)
+    //
+    //         runInAction(() => this.data = Data.reconstituteFrom(res.data.data))
+    //         runInAction(() => this.currentPath = this.data.label)
+    //         runInAction(() => this.children = Children.reconstituteFrom(res.data.data))
+    //
+    //             // .then(res => {
+    //             //     this.data = Data.reconstituteFrom(res.data.data)
+    //             //     this.children = Children.reconstituteFrom(res.data.data)
+    //             //     // console.log('this..children-- ', this.children)
+    //             //     this.currentPath = this.data.label
+    //             //     console.log('currPath: ', this.currentPath)
+    //             // })
+    //     }
+    //     catch (e) {
+    //         console.log('Opa-opana! ', e.message)
+    //         runInAction(() => this.loadChildrenError = e.message);
+    //     }
+    //
+    // }
 
     @action
     async expandNode(link) {
@@ -57,7 +85,8 @@ export default class DataStore {
             // runInAction(() => this.myChildren = Children.reconstituteFrom(response.data.data))
         }
         catch (e) {
-            console.log('Opa-opana! ', e)
+            console.log('Opa-opana! ', e.message)
+            runInAction(() => this.loadChildrenError = e.message);
         }
         finally {
             // console.log('New children! ', this.children)

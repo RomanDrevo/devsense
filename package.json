@@ -15,11 +15,13 @@
     "react-app-rewire-mobx": "^1.0.9",
     "react-app-rewired": "^1.6.2",
     "react-bootstrap": "^0.32.4",
+    "react-bootstrap-sweetalert": "^4.4.1",
     "react-dom": "^16.6.3",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "sweetalert": "^2.1.2",
+    "sweetalert-react": "^0.4.11",
     "sweetalert2-react": "^0.7.2"
   },
   "babel": {

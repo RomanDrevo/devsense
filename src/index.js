@@ -9,8 +9,9 @@ import 'basscss/css/basscss.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import {BrowserRouter as Router} from 'react-router-dom';
 
+
 const injectables = bootstrapper()
-console.log('injectables: ', injectables)
+// console.log('injectables: ', injectables)
 
 ReactDOM.render(<Router>
     <Provider {...injectables}><App /></Provider>
