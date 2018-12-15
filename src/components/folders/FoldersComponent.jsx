@@ -17,10 +17,30 @@ class Node extends Component {
     }
 
     componentDidMount(){
+
+        // var type = 0.25, //circle type - 1 whole, 0.5 half, 0.25 quarter
+        //     radius = '200px', //distance from center
+        //     start = 0, //shift start from 0
+        //     $elements = $('li'),
+        //     numberOfElements = (type === 1) ?  $elements.length : $elements.length - 1, //adj for even distro of elements when not full circle
+        //     slice = 360 * type / numberOfElements;
+        //
+        // console.log('$elements: ', $elements)
+        //
+        // $elements.each(function(i) {
+        //     var $self = $(this),
+        //         rotate = slice * i + start,
+        //         rotateReverse = rotate * -1;
+        //
+        //     $self.css({
+        //         'transform': 'rotate(' + rotate + 'deg) translate(' + radius + ') rotate(' + rotateReverse + 'deg)'
+        //     });
+        // });
+
         const {node, dataStore} = this.props
         console.log('-mounted, I am: ', node.label)
         // console.log('dataStore: ', dataStore.currentPath)
-        this.setState({myPath: this.state.myPath + '/' + node.label})
+        this.setState({myPath: this.state.myPath + '/' + node.label, isChildrenShow: false})
 
         let config = {
             headers: {
@@ -54,8 +74,8 @@ class Node extends Component {
         // });
         return (
             <ul>
-                <li>
-                    <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>
+                <li onClick={this.handleOnClick} className={this.props.node.type === 0 ? 'folder-node' : 'picture-node'}>
+                    {/*<h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>*/}
                     {/*{nodes}*/}
 
                     {
@@ -113,6 +133,10 @@ class RootNode extends Component{
 @observer
 class FoldersComponent extends Component {
 
+    componentDidMount(){
+
+    }
+
     render() {
         const {dataStore} = this.props
         const {data} = dataStore
@@ -148,76 +172,6 @@ class FoldersComponent extends Component {
             </div>
         );
     }
-
-    // componentDidMount(){
-    //
-    //     const {dataStore} = this.props
-    //
-    //     const {data} = dataStore
-    //
-    //     let childrenAmount = data.children? data.children.length : null
-    //
-    //     console.log('childrenAmount: ', childrenAmount)
-    //
-    //     let createNodes = function (numNodes, radius) {
-    //         console.log('here: ', numNodes, radius)
-    //         let nodes = [],
-    //             width = 50,
-    //             // height = 50,
-    //             angle,
-    //             x,
-    //             y,
-    //             i;
-    //         for (i=0; i<numNodes; i++) {
-    //             angle = (i / (numNodes*2)) * Math.PI; // Calculate the angle at which the element will be placed.
-    //                                                   // For a semicircle, we would use (i / numNodes) * Math.PI.
-    //             x = (radius * Math.cos(angle)) + (width/2); // Calculate the x position of the element.
-    //             y = (radius * Math.sin(angle)) + (width/2); // Calculate the y position of the element.
-    //             nodes.push({'id': i, 'x': x, 'y': y});
-    //         }
-    //         return nodes;
-    //     }
-    //
-    //     let createSvg = function (radius, callback) {
-    //         d3.selectAll('svg').remove();
-    //         let svg = d3.select('#canvas').append('svg:svg')
-    //             .attr('width', 200)
-    //             .attr('height', 200);
-    //         callback(svg);
-    //     }
-    //
-    //     let createElements = function (svg, nodes, elementRadius) {
-    //         let element = svg.selectAll('circle')
-    //             .data(nodes)
-    //             .enter().append('svg:circle')
-    //             .attr('r', elementRadius)
-    //             .attr('cx', function (d, i) {
-    //                 return d.x;
-    //             })
-    //             .attr('cy', function (d, i) {
-    //                 return d.y;
-    //             });
-    //     }
-    //
-    //     let draw = function () {
-    //         let numNodes = childrenAmount ? childrenAmount : 0;
-    //         let radius = 140;
-    //         let nodes = createNodes(numNodes, radius);
-    //         createSvg(radius, function (svg) {
-    //             createElements(svg, nodes, 5);
-    //         });
-    //     }
-    //
-    //     // $(document).ready(function() {
-    //     //     draw();
-    //     // });
-    //     //
-    //     // $("#radius, #numNodes").bind('keyup', function(e) {
-    //     //     draw();
-    //     // });
-    //
-    //     draw();
-    // }
 }
 
 export default FoldersComponent;

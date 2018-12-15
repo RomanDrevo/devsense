@@ -1,26 +1,70 @@
 .root-folder{
     /*position: relative;*/
+    margin-top: 20px;
     width: 50px;
     height: 50px;
-    background: gray;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;
     cursor: pointer;
+    background-color: lightgray;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 5px lightgray;
 }
 
-
-
-.child-folder{
+.folder-node{
     width: 25px;
     height: 25px;
-    background: gray;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;
     cursor: pointer;
+    background-color: darkgrey;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 5px darkgrey;
+    margin: 15px;
 }
+
+.picture-node{
+    width: 25px;
+    height: 25px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    cursor: pointer;
+    background-color: blue;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 5px blue;
+    margin: 15px;
+}
+
+
+/*.child-folder{*/
+    /*width: 25px;*/
+    /*height: 25px;*/
+    /*background: gray;*/
+    /*-webkit-border-radius: 100%;*/
+    /*-moz-border-radius: 100%;*/
+    /*border-radius: 100%;*/
+    /*cursor: pointer;*/
+/*}*/
 
 .pointer{
     cursor: pointer;
 }
+
+ul {
+    /*position: relative;*/
+    /*top: 20px; left: 20px; !*for example purposes only*!*/
+    /*list-style-type: none;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+}
+li {
+    list-style-type: none;
+    /*position: absolute;*/
+    /*-webkit-transition: all 2s linear;*/
+    /*-moz-transition: all 2s linear;*/
+    /*transition: all 2s linear;*/
+}
+
