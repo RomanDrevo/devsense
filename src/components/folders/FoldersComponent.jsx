@@ -79,7 +79,6 @@ class Node extends Component {
         // console.log('Node Props: ', this.props)
 
         const {dataStore, node, history} = this.props
-        const {children: {children}} = dataStore
         const {selectedNode} = dataStore
 
         // const nodes = this.state.children.map(child => {
