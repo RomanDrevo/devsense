@@ -49,8 +49,8 @@ export default class DataStore {
 
 
     @action
-    async expandNode(link) {
-        // console.log('here, sending ajax to: ', link)
+    async getNodeChildren(link) {
+        console.log('here, sending ajax to: ', link)
         try {
             const response = await axios(`${this.url}?path=${link}`, this._config)
             // console.log('--+link', link)
@@ -79,8 +79,10 @@ export default class DataStore {
     }
 
     @action
-    setSelectedNode = node => {
+    setSelectedNode = (node, children) => {
+        // console.log(node, children)
         this.selectedNode = node
+        this.selectedNode.children = children
     }
 
     @action

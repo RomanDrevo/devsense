@@ -22,6 +22,15 @@ class Node extends Component {
 
     componentDidMount() {
 
+        const {node, dataStore} = this.props
+        console.log('-mounted, I am: ', node.label)
+        this.setState({myPath: this.state.myPath + '/' + node.label, isChildrenShow: false})
+
+
+        // if (node.type === 0) {
+        //
+        // }
+
         // var type = 0.25, //circle type - 1 whole, 0.5 half, 0.25 quarter
         //     radius = '200px', //distance from center
         //     start = 0, //shift start from 0
@@ -41,42 +50,37 @@ class Node extends Component {
         //     });
         // });
 
-        const {node, dataStore} = this.props
-        console.log('-mounted, I am: ', node.label)
-        // console.log('dataStore: ', dataStore.currentPath)
-        this.setState({myPath: this.state.myPath + '/' + node.label, isChildrenShow: false})
-
-        let config = {
-            headers: {
-                'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
-            }
-        }
-
-        if (node.type === 0) {
-            dataStore.expandNode(this.props.myPath)
-                .then((res) => this.setState({myChildren: res ? res.data.data.children : []}))
-        }
 
     }
 
-    handleOnFolderClick = () => {
+    handleOnFolderClick = (node) => {
 
-        this.setState({isChildrenShow: true})
+        const {dataStore} = this.props
+
+        dataStore.getNodeChildren(this.props.myPath)
+            .then((res) => this.setState({myChildren: res ? res.data.data.children : []}))
+
+        // dataStore.setSelectedNode(node, this.state.myChildren)
+
+        // this.setState({isChildrenShow: true})
+
+        console.log('seelcted node: ', dataStore.selectedNode)
 
     }
 
     handleOnPictureClick = () => {
         const {history} = this.props
         console.log('history: ', this.props)
-        // history.push('/picture')
+        history.push('/picture')
     }
 
     render() {
 
         // console.log('Node Props: ', this.props)
 
-        const {dataStore, node} = this.props
+        const {dataStore, node, history} = this.props
         const {children: {children}} = dataStore
+        const {selectedNode} = dataStore
 
         // const nodes = this.state.children.map(child => {
         //     let path = this.state.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
@@ -85,39 +89,23 @@ class Node extends Component {
         // });
         return (
             <ul>
-                <li onClick={node.type === 0 ? this.handleOnFolderClick : this.handleOnPictureClick}
+                <li onClick={() => node.type === 0 ? this.handleOnFolderClick(node) : this.handleOnPictureClick}
                     className={this.props.node.type === 0 ? 'folder-node' : 'picture-node'}>
                     <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>
                     {/*{nodes}*/}
 
                     {
-                        this.state.isChildrenShow ?
-                            this.state.myChildren && this.state.myChildren.map(child => (
-                                <div key={child.label}>
-                                    <Node
-                                        myPath={this.props.myPath + '/' + child.label}
-                                        node={child}
-                                        dataStore={dataStore}
-                                    />
-                                </div>
-                            ))
-                            :
-                            null
+                        this.state.myChildren && this.state.myChildren.map(child => (
+                            <div key={child.label}>
+                                <Node
+                                    myPath={this.props.myPath + '/' + child.label}
+                                    node={child}
+                                    dataStore={dataStore}
+                                    history={history}
+                                />
+                            </div>
+                        ))
                     }
-
-
-                    {/*{*/}
-                    {/*this.state.children && this.state.children.map(child =>*/}
-                    {/*// let path = this.state.path + '/' + child.label;*/}
-                    {/*<div key={child.label}>*/}
-                    {/*<Node*/}
-                    {/*path={this.state.path + '/' + child.label}*/}
-                    {/*node={child}*/}
-                    {/*dataStore={dataStore}*/}
-                    {/*/>*/}
-                    {/*</div>)*/}
-                    {/*}*/}
-
 
                 </li>
             </ul>
@@ -125,89 +113,44 @@ class Node extends Component {
     }
 }
 
-
-@inject('dataStore')
-@observer
-class RootNode extends Component {
-    render() {
-        const {dataStore} = this.props
-        return (
-            <div className="root-folder" onClick={dataStore.initRootNode}/>
-        )
-    }
-}
-
 @withRouter
 @inject('dataStore')
 @observer
-class FoldersComponent extends Component {
+class RootNode extends Component {
+    state = {
+        myChildren: [],
+        // myPath: 'root',
+    };
 
-    componentDidMount() {
-
-    }
-
-    onConfirm = () => {
-        window.location.reload()
+    handleOnClick = () => {
+        const {dataStore} = this.props
+        dataStore.getNodeChildren('root')
+            .then((res) => this.setState({myChildren: res ? res.data.data.children : []}))
     }
 
     render() {
         const {dataStore, history} = this.props
-        const {data} = dataStore
-        const {children: {children}} = dataStore
-        // console.log('-+ children: ', children)
-
-        // if (dataStore.isLoading || !dataStore.data.children)
-        //     return <div><img src={loader} className="loader" alt="loading-spinner"/></div>
-
-
         return (
             <div>
-                <RootNode/>
+                <div className="root-folder" onClick={this.handleOnClick}/>
 
                 {
-                    this.props.dataStore.loadChildrenError &&
-
-                    <SweetAlert
-                        warning
-                        // showCancel
-                        confirmBtnText="OK"
-                        confirmBtnBsStyle="danger"
-                        cancelBtnBsStyle="default"
-                        title="Server Error"
-                        onConfirm={this.onConfirm}
-                        // onCancel={this.closeAlert}
-                    >
-                        {
-                            this.props.dataStore.loadChildrenError
-                        }
-                        <h4>Click "OK" button to reload the app.</h4>
-                    </SweetAlert>
+                    this.state.myChildren && this.state.myChildren.map(child => (
+                        <div key={child.label}>
+                            <Node
+                                myPath={'root/' + child.label}
+                                node={child}
+                                dataStore={dataStore}
+                                history={history}
+                            />
+                        </div>
+                    ))
                 }
-
-
-                {
-                    children && children.length &&
-                    <ul>
-                        {
-                            children.map((x) => (
-                                <div key={x.label}>
-                                    <Node
-                                        node={x}
-                                        dataStore={dataStore}
-                                        myPath={'root/' + x.label}
-                                        history={history}
-                                    />
-                                </div>
-                            ))
-                        }
-                    </ul>
-                }
-
-                <div id="canvas"/>
-
             </div>
-        );
+
+        )
     }
 }
 
-export default FoldersComponent;
+
+export default RootNode;

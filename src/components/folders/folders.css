@@ -23,6 +23,7 @@
     border: 2px solid #fff;
     box-shadow: 0 0 0 5px darkgrey;
     margin: 15px;
+    margin-left: 90px;
 }
 
 .picture-node{
@@ -36,6 +37,7 @@
     border: 2px solid #fff;
     box-shadow: 0 0 0 5px blue;
     margin: 15px;
+    margin-left: 90px;
 }
 
 

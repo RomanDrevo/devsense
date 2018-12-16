@@ -4,7 +4,7 @@ import './App.css';
 import {inject, observer} from "mobx-react";
 import {Route, Switch, withRouter} from "react-router-dom";
 import {Col, Grid, Row} from "react-bootstrap";
-import FoldersComponent from "./components/folders/FoldersComponent";
+import RootNode from "./components/folders/FoldersComponent";
 import loader from './assets/images/loading.svg'
 
 @withRouter
@@ -42,7 +42,7 @@ class App extends Component {
                         <Col sm={12}>
                             <Switch>
                                 {/*<Route exact path="/" render={() => <Home {...this.props}/>}/>*/}
-                                <Route exact path="/home" component={FoldersComponent} />
+                                <Route exact path="/home" component={RootNode} />
                                 <Route exact path="/picture" />
                             </Switch>
                         </Col>
