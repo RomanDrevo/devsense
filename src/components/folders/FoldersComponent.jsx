@@ -19,9 +19,22 @@ class Node extends Component {
 
     componentDidMount() {
         this.mounted = true
-        const {dataStore} = this.props
-        // dataStore.getPicturesFromNode(dataStore.selectedNode)
-        // console.log('Node props: ', this.props)
+        var type = 0.25, //circle type - 1 whole, 0.5 half, 0.25 quarter
+            radius = '15em', //distance from center
+            start = 0, //shift start from 0
+            $elements = $('.node'),
+            numberOfElements = (type === 1) ?  $elements.length : $elements.length - 1, //adj for even distro of elements when not full circle
+            slice = 360 * type / numberOfElements;
+
+        $elements.each(function(i) {
+            var $self = $(this),
+                rotate = slice * i + start,
+                rotateReverse = rotate * -1;
+
+            $self.css({
+                'transform': 'rotate(' + rotate + 'deg) translate(' + radius + ') rotate(' + rotateReverse + 'deg)'
+            });
+        });
     }
 
     componentWillUnmount(){
@@ -55,9 +68,9 @@ class Node extends Component {
     render() {
         const {dataStore, node, history} = this.props
         return (
-            <ul>
-                <li onClick={(e) => this.handleOnNodeClick(e, node)}
-                    className={this.props.node.type === 0 ? 'folder-node' : 'picture-node'}>
+
+                <div onClick={(e) => this.handleOnNodeClick(e, node)}
+                    className={this.props.node.type === 0 ? 'folder-node node' : 'picture-node node'}>
                     <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>
 
                     {
@@ -73,8 +86,8 @@ class Node extends Component {
                         ))
                     }
 
-                </li>
-            </ul>
+                </div>
+
         );
     }
 }
