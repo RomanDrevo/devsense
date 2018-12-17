@@ -19,7 +19,7 @@ export default class DataStore {
     }
 
     @action
-    setMainPicture = (pic) =>{
+    setMainPicture = (pic) => {
         this.mainPicture = pic
     }
 
@@ -37,18 +37,17 @@ export default class DataStore {
             runInAction(() => this.loadChildrenError = e.message);
         }
         finally {
-            console.log('Pics From store ', this.pictures)
-    }
+            console.log('selected Node ', this.selectedNode)
+        }
     }
 
     @action.bound
     getPicturesFromNode = (node) => {
-        if(node.type === 1){
+        if (node.type === 1) {
             return
         }
         node.children.filter(child => {
-            if(child.type === 1){
-                console.log(child.url)
+            if (child.type === 1) {
                 this.pictures.push(child.url)
             }
         })

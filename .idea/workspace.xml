@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2e04241-4583-4bcb-936a-1b951e4a70d8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/folders/FoldersComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/folders/FoldersComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/folders/folders.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/folders/folders.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pictures/PicturesComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pictures/PicturesComponent.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stores/DataStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/DataStore.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -24,8 +20,8 @@
       <file leaf-file-name="DataStore.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/stores/DataStore.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="45" selection-start-line="45" selection-end-line="45" />
+            <state relative-caret-position="153">
+              <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
@@ -33,23 +29,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FoldersComponent.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FoldersComponent.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/folders/FoldersComponent.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="52" column="69" selection-start-line="52" selection-start-column="69" selection-end-line="52" selection-end-column="69" />
+            <state relative-caret-position="102">
+              <caret line="55" column="76" selection-start-line="55" selection-start-column="76" selection-end-line="55" selection-end-column="76" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -78,7 +62,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="folders.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="folders.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/folders/folders.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="510">
@@ -303,7 +287,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="82565000" />
+    <option name="totallyTimeSpent" value="84319000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -721,16 +705,6 @@
     <entry file="file://$PROJECT_DIR$/public/favicon.ico">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/pictures/pictures.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -742,16 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="51" selection-start-line="51" selection-end-line="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/stores/DataStore.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -775,20 +739,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/folders/FoldersComponent.jsx">
+    <entry file="file://$PROJECT_DIR$/src/components/folders/folders.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="52" column="69" selection-start-line="52" selection-start-column="69" selection-end-line="52" selection-end-column="69" />
+        <state relative-caret-position="510">
+          <caret line="51" selection-start-line="51" selection-end-line="59" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/folders/folders.css">
+    <entry file="file://$PROJECT_DIR$/src/stores/DataStore.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="51" selection-start-line="51" selection-end-line="59" selection-end-column="5" />
+        <state relative-caret-position="153">
+          <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/folders/FoldersComponent.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="55" column="76" selection-start-line="55" selection-start-column="76" selection-end-line="55" selection-end-column="76" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

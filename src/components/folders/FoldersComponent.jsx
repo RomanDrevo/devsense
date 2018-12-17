@@ -60,6 +60,7 @@ class Node extends Component {
                                 node={child}
                                 dataStore={dataStore}
                                 history={history}
+                                range={this.props.range + 1}
                             />
                         </div>
                     ))
@@ -101,6 +102,7 @@ class RootNode extends Component {
                             node={child}
                             dataStore={dataStore}
                             history={history}
+                            range={1}
                         />
                     ))
                 }
