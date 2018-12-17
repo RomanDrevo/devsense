@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {inject, observer} from "mobx-react";
 import {Route, Switch, withRouter} from "react-router-dom";
-import {Col, Grid, Row} from "react-bootstrap";
+import {Button, Col, Grid, Row} from "react-bootstrap";
 import RootNode from "./components/folders/FoldersComponent";
 import loader from './assets/images/loading.svg'
 import PicturesComponent from "./components/pictures/PicturesComponent";
@@ -22,7 +22,7 @@ class App extends Component {
     }
 
     render() {
-        const {dataStore} = this.props
+        const {history} = this.props
 
         // if (dataStore.isLoading)
         //     return <div><img src={loader} className="loader" alt="loading-spinner"/></div>
@@ -31,7 +31,12 @@ class App extends Component {
         return (
             <div className="App">
                 <Grid className="">
-
+                    <Row className="mt-5">
+                        <Col sm={12}>
+                            <Button className="mr-1" onClick={()=>history.push('home')}>Home</Button>
+                            <Button className="ml-1" onClick={()=>history.push('picture')}>Pictures</Button>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col sm={12}>
                             <Switch>

@@ -17,19 +17,20 @@ class PicturesComponent extends Component {
             <div className="pictures-wrapper">
                 <Row>
                     <Col sm={12} className="flex justify-center">
-                        <div className="main-picture">
-                            <img src={dataStore.mainPicture && dataStore.mainPicture}/>
-                        </div>
+                        <div style={{backgroundImage: `url(${dataStore.mainPicture})`}} className="main-picture" />
+                        {/*<img src={dataStore.mainPicture && dataStore.mainPicture}/>*/}
                     </Col>
                 </Row>
 
                 <Row>
                     {
                         dataStore.pictures.map((pic, i) => (
-                            <Col sm={4} className="flex justify-center">
-                                <div style={{backgroundImage: pic}} className="secondary-picture" key={i}>
-                                    {/*<img src={pic}/>*/}
-                                </div>
+                            <Col key={i} sm={4} className="flex justify-center items-center">
+                                <div
+                                    onClick={()=> dataStore.setMainPicture(pic)}
+                                    style={{backgroundImage: `url(${pic})`}}
+                                    className="secondary-picture"
+                                />
                             </Col>
                         ))
                     }

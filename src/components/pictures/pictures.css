@@ -3,13 +3,17 @@
 }
 
 .main-picture{
-    max-width: 400px;
-    height: auto;
+    width: 509px;
+    height: 200px;
+    margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .secondary-picture{
-    max-width: 100px;
-    max-height: 69px;
+    width: 160px;
+    height: 100px;
+    margin-bottom: 30px;
+    cursor: pointer;
 }
 
 img{
