@@ -6,6 +6,7 @@ import {Route, Switch, withRouter} from "react-router-dom";
 import {Col, Grid, Row} from "react-bootstrap";
 import RootNode from "./components/folders/FoldersComponent";
 import loader from './assets/images/loading.svg'
+import PicturesComponent from "./components/pictures/PicturesComponent";
 
 @withRouter
 @inject('testStore', 'dataStore')
@@ -43,7 +44,8 @@ class App extends Component {
                             <Switch>
                                 {/*<Route exact path="/" render={() => <Home {...this.props}/>}/>*/}
                                 <Route exact path="/home" component={RootNode} />
-                                <Route exact path="/picture" />
+                                <Route exact path="/picture" component={PicturesComponent} />
+
                             </Switch>
                         </Col>
                     </Row>

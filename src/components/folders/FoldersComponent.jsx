@@ -22,6 +22,8 @@ class Node extends Component {
 
     componentDidMount() {
 
+        this.mounted = true
+
         const {node, dataStore} = this.props
         console.log('-mounted, I am: ', node.label)
         this.setState({myPath: this.state.myPath + '/' + node.label, isChildrenShow: false})
@@ -53,12 +55,25 @@ class Node extends Component {
 
     }
 
-    handleOnFolderClick = (node) => {
+    componentWillUnmount(){
+        this.mounted = false
+    }
 
-        const {dataStore} = this.props
+    handleOnNodeClick = (node) => {
+
+        const {dataStore, history} = this.props
+
+        if(node.type === 1){
+            history.push('/picture')
+        }
 
         dataStore.getNodeChildren(this.props.myPath)
-            .then((res) => this.setState({myChildren: res ? res.data.data.children : []}))
+            .then((res) => {
+                if(this.mounted){
+                    this.setState({myChildren: res ? res.data.data.children : []})
+                }
+
+            })
 
         // dataStore.setSelectedNode(node, this.state.myChildren)
 
@@ -68,11 +83,7 @@ class Node extends Component {
 
     }
 
-    handleOnPictureClick = () => {
-        const {history} = this.props
-        console.log('history: ', this.props)
-        history.push('/picture')
-    }
+
 
     render() {
 
@@ -88,7 +99,7 @@ class Node extends Component {
         // });
         return (
             <ul>
-                <li onClick={() => node.type === 0 ? this.handleOnFolderClick(node) : this.handleOnPictureClick}
+                <li onClick={() => this.handleOnNodeClick(node)}
                     className={this.props.node.type === 0 ? 'folder-node' : 'picture-node'}>
                     <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>
                     {/*{nodes}*/}
