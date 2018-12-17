@@ -9,7 +9,7 @@ import loader from './assets/images/loading.svg'
 import PicturesComponent from "./components/pictures/PicturesComponent";
 
 @withRouter
-@inject('testStore', 'dataStore')
+@inject('dataStore')
 @observer
 class App extends Component {
 
@@ -31,13 +31,6 @@ class App extends Component {
         return (
             <div className="App">
                 <Grid className="">
-                    {/*<form>*/}
-                        {/*<label htmlFor="radius">Radius:</label>*/}
-                        {/*<input type="text" id="radius" name="radius" value={200} />*/}
-
-                        {/*<label htmlFor="numNodes">Number of elements:</label>*/}
-                        {/*<input type="text" id="numNodes" name="radius" value={100} />*/}
-                    {/*</form>*/}
 
                     <Row>
                         <Col sm={12}>

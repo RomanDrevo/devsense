@@ -24,18 +24,20 @@ export default class DataStore {
             // console.log('--+link', link)
             // const children = Children.reconstituteFrom(response.data.data)
             // console.log('--+++-------', response)
+            runInAction(() => this.selectedNode = Data.reconstituteFrom(response.data.data))
             return response
-            // runInAction(() => this.myChildren = Children.reconstituteFrom(response.data.data))
         }
         catch (e) {
             console.log('Opa-opana! ', e.message)
             runInAction(() => this.loadChildrenError = e.message);
         }
         finally {
-            // console.log('New children! ', this.children)
+            console.log('Selected Node From store ', this.selectedNode)
         }
 
     }
+
+
 
     // @action
     // setSelectedNode = (node, children) => {

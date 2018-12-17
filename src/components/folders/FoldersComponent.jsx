@@ -26,7 +26,7 @@ class Node extends Component {
 
         const {node, dataStore} = this.props
         console.log('-mounted, I am: ', node.label)
-        this.setState({myPath: this.state.myPath + '/' + node.label, isChildrenShow: false})
+        // this.setState({myPath: this.state.myPath + '/' + node.label, isChildrenShow: false})
 
 
         // if (node.type === 0) {
@@ -72,7 +72,6 @@ class Node extends Component {
                 if(this.mounted){
                     this.setState({myChildren: res ? res.data.data.children : []})
                 }
-
             })
 
         // dataStore.setSelectedNode(node, this.state.myChildren)
