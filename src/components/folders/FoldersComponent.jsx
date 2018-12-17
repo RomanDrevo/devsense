@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import './folders.css'
 import {inject, observer} from "mobx-react/index";
-import loader from '../../assets/images/loading.svg'
-import axios from 'axios'
-import SweetAlert from 'react-bootstrap-sweetalert';
 import {withRouter} from "react-router-dom";
 
 
@@ -21,38 +18,10 @@ class Node extends Component {
     }
 
     componentDidMount() {
-
         this.mounted = true
-
-        const {node, dataStore} = this.props
-        // console.log('-mounted, I am: ', node.label)
-        // this.setState({myPath: this.state.myPath + '/' + node.label, isChildrenShow: false})
-
-
-        // if (node.type === 0) {
-        //
-        // }
-
-        // var type = 0.25, //circle type - 1 whole, 0.5 half, 0.25 quarter
-        //     radius = '200px', //distance from center
-        //     start = 0, //shift start from 0
-        //     $elements = $('li'),
-        //     numberOfElements = (type === 1) ?  $elements.length : $elements.length - 1, //adj for even distro of elements when not full circle
-        //     slice = 360 * type / numberOfElements;
-        //
-        // console.log('$elements: ', $elements)
-        //
-        // $elements.each(function(i) {
-        //     var $self = $(this),
-        //         rotate = slice * i + start,
-        //         rotateReverse = rotate * -1;
-        //
-        //     $self.css({
-        //         'transform': 'rotate(' + rotate + 'deg) translate(' + radius + ') rotate(' + rotateReverse + 'deg)'
-        //     });
-        // });
-
-
+        const {dataStore} = this.props
+        // dataStore.getPicturesFromNode(dataStore.selectedNode)
+        // console.log('Node props: ', this.props)
     }
 
     componentWillUnmount(){
@@ -66,44 +35,30 @@ class Node extends Component {
         const {dataStore, history} = this.props
 
         if(node.type === 1){
+            dataStore.setMainPicture(node.url)
             history.push('/picture')
         }
 
-        dataStore.getNodeChildren(this.props.myPath)
-            .then((res) => {
-                if(this.mounted){
-                    this.setState({myChildren: res ? res.data.data.children : []})
-                }
-            })
+        if(node.type === 0){
+            dataStore.getNodeChildren(this.props.myPath)
+                .then((res) => {
+                    if(this.mounted){
+                        this.setState({myChildren: res ? res.data.data.children : []})
+                    }
+                })
+        }
 
-        // dataStore.setSelectedNode(node, this.state.myChildren)
-
-        // this.setState({isChildrenShow: true})
-
-        console.log('seelcted node: ', dataStore.selectedNode)
 
     }
 
 
-
     render() {
-
-        // console.log('Node Props: ', this.props)
-
         const {dataStore, node, history} = this.props
-        const {selectedNode} = dataStore
-
-        // const nodes = this.state.children.map(child => {
-        //     let path = this.state.path + '/' + child.label; //здесь мы считаем путь для каждого ребёнка
-        //     console.log('My PATH: ', path)
-        //     return <div key={child.label}><Node path={path} {...child}  node={child} dataStore={dataStore} /></div> // и создаём <Node> для каждого
-        // });
         return (
             <ul>
                 <li onClick={(e) => this.handleOnNodeClick(e, node)}
                     className={this.props.node.type === 0 ? 'folder-node' : 'picture-node'}>
                     <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>
-                    {/*{nodes}*/}
 
                     {
                         this.state.myChildren && this.state.myChildren.map(child => (
@@ -130,7 +85,6 @@ class Node extends Component {
 class RootNode extends Component {
     state = {
         myChildren: [],
-        // myPath: 'root',
     };
 
     handleOnClick = () => {

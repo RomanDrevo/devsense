@@ -8,7 +8,7 @@ import {Provider} from "mobx-react";
 import 'basscss/css/basscss.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import {BrowserRouter as Router} from 'react-router-dom';
-
+import 'basscss/css/basscss.css';
 
 const injectables = bootstrapper()
 // console.log('injectables: ', injectables)

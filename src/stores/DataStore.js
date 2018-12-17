@@ -1,7 +1,6 @@
 import {observable, action, runInAction} from "mobx";
 import axios from 'axios'
 import Data from "../models/Data";
-import Children from "../models/Children";
 
 export default class DataStore {
 
@@ -9,6 +8,9 @@ export default class DataStore {
     @observable selectedNode = null
     @observable myChildren = []
     @observable loadChildrenError = null
+    @observable pictures = []
+    @observable mainPicture = null
+
 
     _config = {
         headers: {
@@ -17,32 +19,41 @@ export default class DataStore {
     }
 
     @action
+    setMainPicture = (pic) =>{
+        this.mainPicture = pic
+    }
+
+    @action
     async getNodeChildren(link) {
         console.log('here, sending ajax to: ', link)
         try {
             const response = await axios(`${this.url}?path=${link}`, this._config)
-            // console.log('--+link', link)
-            // const children = Children.reconstituteFrom(response.data.data)
-            // console.log('--+++-------', response)
             runInAction(() => this.selectedNode = Data.reconstituteFrom(response.data.data))
+            runInAction(() => this.getPicturesFromNode(this.selectedNode))
             return response
         }
         catch (e) {
-            console.log('Opa-opana! ', e.message)
+            console.log('Error! ', e.message)
             runInAction(() => this.loadChildrenError = e.message);
         }
         finally {
-            console.log('Selected Node From store ', this.selectedNode)
-        }
-
+            // console.log('Selected Node From store ', this.selectedNode)
+            console.log('Pics From store ', this.pictures)
+    }
     }
 
+    @action.bound
+    getPicturesFromNode = (node) => {
+        // console.log('----node: ', node)
+        if(node.type === 1){
+            return
+        }
+        node.children.filter(child => {
+            if(child.type === 1){
+                console.log(child.url)
+                this.pictures.push(child.url)
+            }
+        })
 
-
-    // @action
-    // setSelectedNode = (node, children) => {
-    //     // console.log(node, children)
-    //     this.selectedNode = node
-    //     this.selectedNode.children = children
-    // }
+    }
 }

@@ -1,0 +1,17 @@
+.pictures-wrapper{
+    margin-top: 100px;
+}
+
+.main-picture{
+    max-width: 400px;
+    height: auto;
+}
+
+.secondary-picture{
+    max-width: 100px;
+    max-height: 69px;
+}
+
+img{
+    width: 100%;
+}
