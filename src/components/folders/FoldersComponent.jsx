@@ -25,7 +25,7 @@ class Node extends Component {
         this.mounted = true
 
         const {node, dataStore} = this.props
-        console.log('-mounted, I am: ', node.label)
+        // console.log('-mounted, I am: ', node.label)
         // this.setState({myPath: this.state.myPath + '/' + node.label, isChildrenShow: false})
 
 
@@ -59,7 +59,9 @@ class Node extends Component {
         this.mounted = false
     }
 
-    handleOnNodeClick = (node) => {
+    handleOnNodeClick = (e, node) => {
+
+        e.stopPropagation()
 
         const {dataStore, history} = this.props
 
@@ -98,7 +100,7 @@ class Node extends Component {
         // });
         return (
             <ul>
-                <li onClick={() => this.handleOnNodeClick(node)}
+                <li onClick={(e) => this.handleOnNodeClick(e, node)}
                     className={this.props.node.type === 0 ? 'folder-node' : 'picture-node'}>
                     <h4 className="pointer" onClick={this.handleOnClick}>{node.label}</h4>
                     {/*{nodes}*/}
