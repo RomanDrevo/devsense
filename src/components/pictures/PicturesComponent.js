@@ -12,13 +12,11 @@ class PicturesComponent extends Component {
     render() {
         const {dataStore} = this.props
         console.log(dataStore)
-
         return (
             <div className="pictures-wrapper">
                 <Row>
                     <Col sm={12} className="flex justify-center">
                         <div style={{backgroundImage: `url(${dataStore.mainPicture})`}} className="main-picture" />
-                        {/*<img src={dataStore.mainPicture && dataStore.mainPicture}/>*/}
                     </Col>
                 </Row>
 

@@ -37,14 +37,12 @@ export default class DataStore {
             runInAction(() => this.loadChildrenError = e.message);
         }
         finally {
-            // console.log('Selected Node From store ', this.selectedNode)
             console.log('Pics From store ', this.pictures)
     }
     }
 
     @action.bound
     getPicturesFromNode = (node) => {
-        // console.log('----node: ', node)
         if(node.type === 1){
             return
         }

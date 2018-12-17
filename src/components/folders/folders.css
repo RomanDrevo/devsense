@@ -64,25 +64,9 @@
 }
 
 ul {
-    /*position: relative;*/
-    /*top: 0px; left: 0px; !*for example purposes only*!*/
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-/*li {*/
-    /*list-style-type: none;*/
-    /*position: absolute;*/
-    /*-webkit-transition: all 2s linear;*/
-    /*-moz-transition: all 2s linear;*/
-    /*transition: all 2s linear;*/
-/*}*/
-
-#container { width: 600px; height: 600px; border: 1px solid #000; position: relative; }
-#center { width: 10px; height: 10px; position: absolute; left: 295px; top: 295px; background: #000; }
-.field { width: 20px; height: 20px; position: absolute; background: #f00; }
 
 
-.children{
-    border: 1px solid red;
-}
